@@ -1,16 +1,19 @@
-const express = require('express');
-const app = express();
+const express = require("express");
+const router = express.Router();
+const { Posts } = require("../models");
 
-const db = require('./models'); //grabs the tables from models 
- //Models is where we can crate our tables without needing to use MySQL
-
-//Routers
-const postRouter= require('./routes/Posts');
-app.use('post', postRouter); 
-
- db.sequelize.sync().then(() => {
-    app.listen(5001, () => { 
-    console.log('Server running on port 5001');
- });
+router.get("/", async (req, res) => {
+  const listOfPosts = await Posts.findAll(); //Allows us to view a list of every post ever made
+  res.json(listOfPosts);
 });
 
+
+router.post("/", async (req, res) => {
+  const post = req.body; //Allows us to create post from the server side 
+  await Posts.create(post);
+  res.json(post);
+}); 
+
+
+
+module.exports = router;

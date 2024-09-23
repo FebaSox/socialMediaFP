@@ -2,14 +2,14 @@
   "development": {
     "username": "root",
     "password": "Million2121$",
-    "database": "websitedb",
-    "host": "localhost",
+    "database": "socmed",
+    "host": "127.0.0.1",
     "dialect": "mysql"
   },
   "test": {
     "username": "root",
     "password": null,
-    "database": "websitedb",
+    "database": "socmed",
     "host": "127.0.0.1",
     "dialect": "mysql"
   },
