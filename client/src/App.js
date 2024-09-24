@@ -6,6 +6,8 @@ import Post from "./pages/Post";
 import Registration from "./pages/Registration";
 import Login from "./pages/Login";
 import PageNotFound from "./pages/PageNotFound";
+import Profile from "./pages/Profile";
+import ChangePassword from './pages/ChangePassword';
 
 import { AuthContext } from "./helpers/AuthContext";
 import { useState, useEffect } from "react";
@@ -49,12 +51,15 @@ function App() {
         <Router>
           <div className="navbar">
             <div className="links">
-              <Link to="/"> Home Page</Link>
-              <Link to="/createpost"> Create A Post</Link>
-              {!authState.status && (
+              {!authState.status ? (
                 <>
                   <Link to="/login"> Login</Link>
                   <Link to="/registration"> Registration</Link>
+                </>
+              ) : (
+                <>
+                  <Link to="/"> Home Page</Link>
+                  <Link to="/createpost"> Create A Post</Link>
                 </>
               )}
             </div>
@@ -64,12 +69,14 @@ function App() {
             </div>
           </div>
           <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/createpost" element={<CreatePost />} />
-            <Route path="/post/:id" element={<Post />} />
-            <Route path="/registration" element={<Registration />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="*" element={<PageNotFound />} />
+            <Route path="/" element={<Home/>} />
+            <Route path="/createpost" element={<CreatePost/>} />
+            <Route path="/post/:id" element={<Post/>} />
+            <Route path="/registration" element={<Registration/>} />
+            <Route path="/login" element={<Login/>} />
+            <Route path="/profile/:id" element={<Profile/>} />
+            <Route path="/changepassword" element={<ChangePassword/>} />
+            <Route path="*" element={<PageNotFound/>} />
           </Routes>
         </Router>
       </AuthContext.Provider>
