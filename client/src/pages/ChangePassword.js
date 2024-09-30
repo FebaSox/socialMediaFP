@@ -17,7 +17,7 @@ function ChangePassword() {
           headers: {
             accessToken: localStorage.getItem("accessToken"),
           },
-        }
+        },
       )
       .then((response) => {
         if (response.data.error) {

@@ -34,7 +34,7 @@ function Post() {
           headers: {
             accessToken: localStorage.getItem("accessToken"),
           },
-        }
+        },
       )
       .then((response) => {
         if (response.data.error) {
@@ -59,7 +59,7 @@ function Post() {
         setComments(
           comments.filter((val) => {
             return val.id != id;
-          })
+          }),
         );
       });
   };
@@ -85,7 +85,7 @@ function Post() {
         },
         {
           headers: { accessToken: localStorage.getItem("accessToken") },
-        }
+        },
       );
 
       setPostObject({ ...postObject, title: newTitle });
@@ -99,7 +99,7 @@ function Post() {
         },
         {
           headers: { accessToken: localStorage.getItem("accessToken") },
-        }
+        },
       );
 
       setPostObject({ ...postObject, postText: newPostText });
