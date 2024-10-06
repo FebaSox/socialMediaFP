@@ -197,7 +197,6 @@ function Post() {
   const [comments, setComments] = useState([]);
   const [newComment, setNewComment] = useState("");
   const { authState } = useContext(AuthContext);
-
   let navigate = useNavigate();
 
   useEffect(() => {
@@ -225,9 +224,7 @@ function Post() {
         }
       )
       .then((response) => {
-        if (response.data.error) {
-          console.log(response.data.error);
-        } else {
+        if (!response.data.error) {
           const commentToAdd = {
             commentBody: newComment,
             username: response.data.username,
@@ -259,18 +256,14 @@ function Post() {
   };
 
   const editPost = (option) => {
-    if (option === "title") {
-      let newTitle = prompt("Enter New Title:");
-      axios.put("http://localhost:3001/posts/title", { newTitle, id }, {
+    let newValue = prompt(`Enter New ${option.charAt(0).toUpperCase() + option.slice(1)}:`);
+
+    if (newValue) {
+      axios.put(`http://localhost:3001/posts/${option}`, { newValue, id }, {
         headers: { accessToken: localStorage.getItem("accessToken") },
+      }).then(() => {
+        setPostObject({ ...postObject, [option]: newValue });
       });
-      setPostObject({ ...postObject, title: newTitle });
-    } else {
-      let newPostText = prompt("Enter New Text:");
-      axios.put("http://localhost:3001/posts/postText", { newText: newPostText, id }, {
-        headers: { accessToken: localStorage.getItem("accessToken") },
-      });
-      setPostObject({ ...postObject, postText: newPostText });
     }
   };
 
@@ -278,57 +271,45 @@ function Post() {
     <div className="postPage">
       <div className="leftSide">
         <div className="post" id="individual">
-          <div
-            className="title"
-            onClick={() => {
-              if (authState.username === postObject.username) {
-                editPost("title");
-              }
-            }}
-          />
-          {postObject.title}
-        </div>
-        <div
-          className="body"
-          onClick={() => {
-            if (authState.username === postObject.username) {
-              editPost("body");
-            }
-          }}
-        >
-          {postObject.postText}
-        </div>
-        <div className="footer">
-          {postObject.username}
-          {authState.username === postObject.username && (
-            <button onClick={() => deletePost(postObject.id)}>Delete Post</button>
-          )}
-        </div>
-      </div>
-
-      <div className="addCommentContainer">
-        <input
-          type="text"
-          placeholder="Comment..."
-          autoComplete="off"
-          value={newComment}
-          onChange={(event) => setNewComment(event.target.value)}
-        />
-        <button onClick={addComment}>Add Comment</button>
-      </div>
-      <div className="listOfComments">
-        {comments.map((comment, key) => (
-          <div key={key} className="comment">
-            {comment.commentBody}
-            <label> Username: {comment.username}</label>
-            {authState.username === comment.username && (
-              <button onClick={() => deleteComment(comment.id)}>X</button>
+          <div className="title" onClick={() => authState.username === postObject.username && editPost("title")}>
+            {postObject.title}
+          </div>
+          <div className="body" onClick={() => authState.username === postObject.username && editPost("body")}>
+            {postObject.postText}
+          </div>
+          <div className="footer">
+            {postObject.username}
+            {authState.username === postObject.username && (
+              <button onClick={() => deletePost(postObject.id)}>Delete Post</button>
             )}
           </div>
-        ))}
+        </div>
+
+        <div className="addCommentContainer">
+          <input
+            type="text"
+            placeholder="Comment..."
+            autoComplete="off"
+            value={newComment}
+            onChange={(event) => setNewComment(event.target.value)}
+          />
+          <button onClick={addComment}>Add Comment</button>
+        </div>
+        <div className="listOfComments">
+          {comments.map((comment, key) => (
+            <div key={key} className="comment">
+              {comment.commentBody}
+              <label> Username: {comment.username}</label>
+              {authState.username === comment.username && (
+                <button onClick={() => deleteComment(comment.id)}>X</button>
+              )}
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );
 }
 
 export default Post;
+

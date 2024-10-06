@@ -81,7 +81,7 @@ function App() {
     };
 
     fetchAuthData();
-  }, []);
+  }, []); // Empty dependency array to run only once on mount
 
   const AppContent = () => {
     const navigate = useNavigate();

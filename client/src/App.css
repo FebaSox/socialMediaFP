@@ -116,7 +116,7 @@ a {
   color: white; /* White text for the username */
   font-weight: bold; /* Bold username */
   margin-left: auto; /* Push the username to the right */
-  z-index: 999999;
+
 }
 
 
@@ -273,4 +273,37 @@ span {
 
 .unlikeBttn {
   color: #9b59b6; /* Neon purple when liked */
+}
+
+
+/* Individual Post Page */
+.postPage {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center content */
+  padding: 20px; /* Add some padding */
+}
+
+.leftSide {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center all children */
+  width: 100%;
+}
+
+#individual {
+  width: 100%; /* Use full width */
+  max-width: 600px; /* Limit max width */
+}
+
+/* Adjust title, body, and footer font sizes */
+.title,
+.body,
+.footer {
+  width: 100%; /* Ensure full width */
+  padding: 15px; /* Consistent padding */
+}
+
+* {
+  box-sizing: border-box;
 }
