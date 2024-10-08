@@ -307,3 +307,13 @@ span {
 * {
   box-sizing: border-box;
 }
+
+.comment-username {
+  font-weight: bold; /* Makes the username bold */
+  margin-right: 5px; /* Adds space between username and comment */
+  color: #9d65bd; /* You can adjust this color to distinguish it */
+}
+
+.comment-body {
+  color: #fff9f9; /* Regular comment color */
+}

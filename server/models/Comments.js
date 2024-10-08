@@ -1,3 +1,4 @@
+
 module.exports = (sequelize, DataTypes) => {
     const Comments = sequelize.define("Comments", {
       commentBody: {
@@ -12,3 +13,4 @@ module.exports = (sequelize, DataTypes) => {
   
     return Comments;
   };
+

@@ -20,13 +20,24 @@ router.post("/", validateToken, async (req, res) => {
 router.delete("/:commentId", validateToken, async (req, res) => {
   const commentId = req.params.commentId;
 
-  await Comments.destroy({
-    where: {
-      id: commentId,
-    },
-  });
+  try {
+    const deletedComment = await Comments.destroy({
+      where: {
+        id: commentId,
+      },
+    });
 
-  res.json("DELETED SUCCESSFULLY");
+    if (deletedComment) {
+      res.json({ message: "DELETED SUCCESSFULLY" });
+    } else {
+      res.status(404).json({ error: "Comment not found" }); // Handle case where comment doesn't exist
+    }
+  } catch (error) {
+    console.error("Error deleting comment:", error); // Log the error for debugging
+    res.status(500).json({ error: "An error occurred while deleting the comment" });
+  }
 });
+
+
 
 module.exports = router;

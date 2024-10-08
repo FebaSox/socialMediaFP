@@ -10,14 +10,39 @@ router.post("/", async (req, res) => {
     const { username, password } = req.body;
 
     try {
-        const hash = await bcrypt.hash(password, 10);
-        await Users.create({ username, password: hash });
-        res.json("SUCCESS");
+        const userExists = await Users.findOne({ where: { username } });
+        if (userExists) {
+            return res.status(400).json({ error: "Username already taken" });
+        }
+
+        const hashedPassword = await bcrypt.hash(password, 10);
+        await Users.create({ username, password: hashedPassword });
+
+        res.json("User registered successfully");
     } catch (error) {
-        console.error("Registration error:", error);
+        console.error("Error during registration:", error);
         res.status(500).json({ error: "An error occurred during registration" });
     }
 });
+
+// Get basic info by ID
+router.get("/basicinfo/:id", async (req, res) => {
+    const id = req.params.id;
+
+    try {
+        const basicInfo = await Users.findByPk(id, {
+            attributes: { exclude: ["password"] },
+        });
+        if (!basicInfo) {
+            return res.status(404).json({ error: "User Not Found" });
+        }
+        res.json(basicInfo); // This will include the bio if it was set
+    } catch (error) {
+        console.error("Error fetching basic info:", error);
+        res.status(500).json({ error: "An error occurred" });
+    }
+});
+
 
 // User login
 router.post("/login", async (req, res) => {

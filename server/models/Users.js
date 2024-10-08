@@ -8,6 +8,10 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false,
     },
+    bio: {  // Add the bio field here
+      type: DataTypes.STRING,
+      allowNull: true, // Allow null values, so it's optional
+    },
   });
 
   Users.associate = (models) => {

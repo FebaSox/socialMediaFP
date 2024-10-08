@@ -41,7 +41,7 @@ const Navbar = ({ authState, logout, navigate }) => (
             alt={authState.username}
             src={`/path/to/profile-pictures/${authState.username}.jpg`} // Placeholder for the profile picture
             onClick={() => navigate(`/profile/${authState.id}`)} // Navigate to profile on click
-            style={{ cursor: "pointer", marginLeft: "10px" }} // Style the avatar
+            style={{ cursor: "pointer", marginRight: "10px" }} // Adjusted marginRight to move the avatar left
           />
           <button onClick={logout}>Logout</button>
         </>
